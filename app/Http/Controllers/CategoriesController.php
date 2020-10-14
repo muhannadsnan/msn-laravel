@@ -16,11 +16,6 @@ class CategoriesController extends Controller
         return view('cats.index', ['data' => $data]);
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
         $new = new Category();
@@ -40,9 +35,13 @@ class CategoriesController extends Controller
         //
     }
 
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Category $category, $id)
     {
-        //
+       $cat = Category::find($id);
+       $cat->title = $request->input('title');
+       if($cat->save()) $msg = 'Category updated.';
+       else $msg = 'Category not updated.';
+       return redirect('/cats')->with('message', $msg);
     }
 
     public function destroy(Category $category, $id)

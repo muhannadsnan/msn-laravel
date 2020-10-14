@@ -22,6 +22,13 @@
                 @method('DELETE')
                 <button type="submit">Delete</button>
             </form>
+            <form action="/cats/{{$cat->id}}" method="POST">
+                @csrf
+                @method('PUT')
+                <input type="text" name="title" placeholder="Change title...">
+                <button type="submit">Update</button>
+            </form>
         </div>
+        <hr>
     @endforeach
 @endif
