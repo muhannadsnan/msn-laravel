@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use Symfony\Component\VarDumper\VarDumper;
+
 
 /* $ php artisan make:controller CategoriesController -r -m Category */
 
@@ -16,31 +18,40 @@ class CategoriesController extends Controller
 
     public function create()
     {
-        echo __FUNCTION__;
+        //
     }
 
     public function store(Request $request)
     {
-        echo __FUNCTION__;
+        $new = new Category();
+        $new->title = $request->input('title');
+        if($new->save()) $msg = 'Category created successfully!';
+        else $msg = 'Could not create category';
+        return redirect('/cats')->with('message', $msg);
     }
 
     public function show(Category $category)
     {
-        echo __FUNCTION__;
+        //
     }
 
     public function edit(Category $category)
     {
-        echo __FUNCTION__;
+        //
     }
 
     public function update(Request $request, Category $category)
     {
-        echo __FUNCTION__;
+        //
     }
 
-    public function destroy(Category $category)
+    public function destroy(Category $category, $id)
     {
-        echo __FUNCTION__;
+        if(Category::find($id)->delete()){
+            $msg = 'Category deleted.';
+        }else{
+            $msg = 'Could not delete category.';
+        }
+        return redirect('/cats')->with('message', $msg);
     }
 }
