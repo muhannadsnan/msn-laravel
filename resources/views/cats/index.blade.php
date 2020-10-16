@@ -11,23 +11,29 @@
     </form>
 </div>
 
+<br><br>
+
 @if(sizeof($data) == 0)
     <h4>No categories.</h4>
 @else
     @foreach($data as $cat)
         <div class="cat">
-            ({{$cat->id}}) {{$cat->title}} <small>{{$cat->updated_at}}</small>
+            
             <form action="/cats/{{$cat->id}}" method="POST">
                 @csrf
                 @method('DELETE')
+
+                ({{$cat->id}}) {{$cat->title}} <small>{{$cat->updated_at}}</small>
                 <button type="submit">Delete</button>
+
+                <form action="/cats/{{$cat->id}}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" name="title" placeholder="Change title...">
+                    <button type="submit">Update</button>
+                </form>
             </form>
-            <form action="/cats/{{$cat->id}}" method="POST">
-                @csrf
-                @method('PUT')
-                <input type="text" name="title" placeholder="Change title...">
-                <button type="submit">Update</button>
-            </form>
+
         </div>
         <hr>
     @endforeach

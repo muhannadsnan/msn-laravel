@@ -7,3 +7,4 @@ Route::get('/', function () {
 });
 
 Route::resource('/cats', 'CategoriesController');
+Route::resource('/products', 'ProductsController');

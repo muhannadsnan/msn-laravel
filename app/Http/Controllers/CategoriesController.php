@@ -18,10 +18,13 @@ class CategoriesController extends Controller
 
     public function store(Request $request)
     {
+        if(empty($request->input('title'))){
+            return redirect('/cats')->with('message', 'Category title can not be empty.');
+        }
         $new = new Category();
         $new->title = $request->input('title');
         if($new->save()) $msg = 'Category created successfully!';
-        else $msg = 'Could not create category';
+        else $msg = 'Error when creating category';
         return redirect('/cats')->with('message', $msg);
     }
 
@@ -40,7 +43,7 @@ class CategoriesController extends Controller
        $cat = Category::find($id);
        $cat->title = $request->input('title');
        if($cat->save()) $msg = 'Category updated.';
-       else $msg = 'Category not updated.';
+       else $msg = 'Error when updating category.';
        return redirect('/cats')->with('message', $msg);
     }
 
@@ -49,7 +52,7 @@ class CategoriesController extends Controller
         if(Category::find($id)->delete()){
             $msg = 'Category deleted.';
         }else{
-            $msg = 'Could not delete category.';
+            $msg = 'Error when deleting category.';
         }
         return redirect('/cats')->with('message', $msg);
     }
