@@ -13,7 +13,7 @@ class CategoriesController extends Controller
     public function index()
     {
         $data = Category::all();
-        return view('cats.index', ['data' => $data]);
+        return view('cats.index', ['data' => $data, 'pTitle' => 'Category - all']);
     }
 
     public function store(Request $request)
